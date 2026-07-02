@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "description": "",
+  "name": "Miel Gabriel",
+  "description": "Sitio web de Gabriel Organic Foods",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

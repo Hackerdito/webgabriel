@@ -13,12 +13,12 @@ export default function Hero() {
   const smoothProgress = useSpring(scrollYProgress, { damping: 25, stiffness: 120 });
 
   // Animate text upwards as user scrolls and stop in place
-  const textY = useTransform(smoothProgress, [0, 0.5], ["0vh", "-28vh"]);
+  const textY = useTransform(smoothProgress, [0, 0.5], ["0vh", "-26vh"]);
   const textScale = useTransform(smoothProgress, [0, 0.5], [1, 0.75]);
 
   // Image fades in and moves up
   const imageOpacity = useTransform(smoothProgress, [0, 0.3], [0, 1]);
-  const imageY = useTransform(smoothProgress, [0, 1], ["15vh", "6vh"]);
+  const imageY = useTransform(smoothProgress, [0, 1], ["14vh", "7vh"]);
   const imageScale = useTransform(smoothProgress, [0, 0.5], [1.05, 1]);
 
   // Fade out the scroll indicator
@@ -34,8 +34,8 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full pointer-events-none z-10"
         >
           <img
-            src="https://webgabriel.vercel.app/hero-video.png"
-            alt="Miel de Origen"
+            src="https://webgabriel.vercel.app/heroimg.png"
+            alt="Miel de origen"
             className="w-full h-full object-cover object-center"
           />
         </motion.div>
@@ -46,7 +46,7 @@ export default function Hero() {
           className="relative z-20 flex flex-col items-center justify-center text-center origin-top pointer-events-none -mt-4 md:-mt-8"
         >
           <h1 className="text-5xl md:text-[7rem] font-medium text-gold tracking-tight leading-[1.1] mb-0 drop-shadow-sm">
-            Miel de Origen
+            Miel de origen
           </h1>
           <p className="text-2xl md:text-[2.5rem] font-light text-dark/90 leading-tight -mt-1 md:-mt-3">
             Hecha con pasión.

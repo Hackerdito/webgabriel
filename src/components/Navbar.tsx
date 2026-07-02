@@ -6,8 +6,9 @@ export default function Navbar() {
   const menus = ['Sobre Nosotros', 'Paquetes', 'Conoce más'];
 
   return (
-    <nav className="fixed top-0 left-0 w-full px-8 md:px-16 py-8 flex items-center justify-between z-50">
-      {/* Logo */}
+    <div className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:py-8 flex justify-center pointer-events-none">
+      <nav className="w-full max-w-6xl px-6 md:px-8 py-3 flex items-center justify-between bg-[#fdfcfb]/60 backdrop-blur-2xl rounded-full border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.04)] pointer-events-auto transition-all duration-300">
+        {/* Logo */}
       <div className="flex flex-col items-start cursor-pointer">
         <img src="https://webgabriel.vercel.app/pan.webp" alt="Gabriel Organic Foods" className="h-10 md:h-12 object-contain" />
       </div>
@@ -53,5 +54,6 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </div>
   );
 }
