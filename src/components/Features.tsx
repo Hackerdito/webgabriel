@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Play, Pause, Maximize } from 'lucide-react';
 
 const features = [
   {
@@ -49,6 +49,7 @@ const itemVariants = {
 
 export default function Features() {
   const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const toggleMute = () => {
@@ -58,8 +59,31 @@ export default function Features() {
     }
   };
 
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (videoRef.current) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.();
+      } else if (videoRef.current.requestFullscreen) {
+        videoRef.current.requestFullscreen();
+      } else if ((videoRef.current as any).webkitEnterFullscreen) {
+        (videoRef.current as any).webkitEnterFullscreen();
+      }
+    }
+  };
+
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-24 bg-cream relative z-20">
+    <section id="conoce-mas" className="py-24 px-6 md:px-12 lg:px-24 bg-cream relative z-20">
       <div className="max-w-7xl mx-auto">
         {/* Video Section */}
         <motion.div 
@@ -76,15 +100,33 @@ export default function Features() {
             loop
             muted={isMuted}
             playsInline
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
             className="w-full h-full object-cover aspect-[16/9] md:aspect-[21/9]"
           />
           <button 
-            onClick={toggleMute}
-            className="absolute bottom-6 right-6 md:bottom-8 md:right-8 bg-dark/40 hover:bg-dark/60 text-white p-3 rounded-full backdrop-blur-md transition-colors duration-300 z-10"
-            aria-label={isMuted ? "Unmute video" : "Mute video"}
+            onClick={toggleFullscreen}
+            className="absolute top-6 right-6 md:top-8 md:right-8 bg-dark/40 hover:bg-dark/60 text-white p-3 rounded-full backdrop-blur-md transition-colors duration-300 z-10"
+            aria-label="Pantalla completa"
           >
-            {isMuted ? <VolumeX className="w-5 h-5 md:w-6 md:h-6" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6" />}
+            <Maximize className="w-5 h-5 md:w-6 md:h-6" />
           </button>
+          <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 flex items-center gap-3 z-10">
+            <button 
+              onClick={togglePlay}
+              className="bg-dark/40 hover:bg-dark/60 text-white p-3 rounded-full backdrop-blur-md transition-colors duration-300"
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              {isPlaying ? <Pause className="w-5 h-5 md:w-6 md:h-6" /> : <Play className="w-5 h-5 md:w-6 md:h-6 ml-0.5" />}
+            </button>
+            <button 
+              onClick={toggleMute}
+              className="bg-dark/40 hover:bg-dark/60 text-white p-3 rounded-full backdrop-blur-md transition-colors duration-300"
+              aria-label={isMuted ? "Unmute video" : "Mute video"}
+            >
+              {isMuted ? <VolumeX className="w-5 h-5 md:w-6 md:h-6" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6" />}
+            </button>
+          </div>
         </motion.div>
 
         {/* Text and Features Grid */}

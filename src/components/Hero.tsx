@@ -25,7 +25,7 @@ export default function Hero() {
   const arrowOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
 
   return (
-    <div ref={containerRef} className="h-[200vh] relative bg-cream">
+    <div id="paquetes" ref={containerRef} className="h-[200vh] relative bg-cream">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         
         {/* Image container: Hidden initially, fades in and rises */}
@@ -33,10 +33,17 @@ export default function Hero() {
           style={{ opacity: imageOpacity, y: imageY, scale: imageScale }}
           className="absolute inset-0 w-full h-full pointer-events-none z-10"
         >
+          {/* Mobile Image */}
+          <img
+            src="https://webgabriel.vercel.app/h_movil.png"
+            alt="Miel de origen"
+            className="w-full h-full object-cover object-center block md:hidden"
+          />
+          {/* Desktop Image */}
           <img
             src="https://webgabriel.vercel.app/heroimg.png"
             alt="Miel de origen"
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center hidden md:block"
           />
         </motion.div>
 
