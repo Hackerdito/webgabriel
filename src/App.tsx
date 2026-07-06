@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
+import PackagesPage from './pages/PackagesPage';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/nosotros" element={<About />} />
+          <Route path="/paquetes" element={<PackagesPage />} />
         </Routes>
       </div>
     </Router>

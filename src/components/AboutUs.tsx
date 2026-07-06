@@ -12,7 +12,8 @@ export default function AboutUs() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover block md:hidden"
+          poster="https://webgabriel.vercel.app/h_movil.png"
+          className="w-full h-full object-cover block md:hidden bg-dark"
         />
         {/* Desktop Video */}
         <video
@@ -21,7 +22,8 @@ export default function AboutUs() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover hidden md:block"
+          poster="https://webgabriel.vercel.app/heroimg.png"
+          className="w-full h-full object-cover hidden md:block bg-dark"
         />
         {/* Subtle gradient overlay to ensure text readability */}
         <div className="absolute inset-0 bg-black/20 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent"></div>

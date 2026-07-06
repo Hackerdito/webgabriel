@@ -9,11 +9,33 @@ export default function Navbar() {
   
   // Estado para abrir/cerrar el menú en versión móvil
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    // Escuchar el evento de cambio en el carrito de Shopify
+    const interval = setInterval(() => {
+      // @ts-ignore
+      if (window.ShopifyUI && window.ShopifyUI.components && window.ShopifyUI.components.cart && window.ShopifyUI.components.cart[0] && window.ShopifyUI.components.cart[0].model && window.ShopifyUI.components.cart[0].model.lineItems) {
+        // @ts-ignore
+        const count = window.ShopifyUI.components.cart[0].model.lineItems.reduce((acc, item) => acc + item.quantity, 0);
+        setCartCount(count);
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const openCart = () => {
+    // @ts-ignore
+    if (window.ShopifyUI && window.ShopifyUI.components && window.ShopifyUI.components.cart && window.ShopifyUI.components.cart[0]) {
+      // @ts-ignore
+      window.ShopifyUI.components.cart[0].open();
+    }
+  };
   
   // Lista de secciones del menú con sus rutas
   const menus = [
     { name: 'Sobre Nosotros', path: '/nosotros', hash: '' },
-    { name: 'Paquetes', path: '/', hash: '#paquetes' },
+    { name: 'Producto', path: '/paquetes', hash: '' },
     { name: 'Conoce más', path: '/', hash: '#conoce-mas' }
   ];
 
@@ -24,16 +46,37 @@ export default function Navbar() {
     return true; // Para '/nosotros' no requerimos hash
   };
 
-  // Scroll suave para los hashes
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace('#', '');
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, menu: typeof menus[0]) => {
+    if (menu.hash) {
+      if (location.pathname === menu.path) {
+        e.preventDefault();
+        const id = menu.hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', `${menu.path}${menu.hash}`);
+        }
       }
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (location.pathname === menu.path) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
+  // Scroll para los hashes cuando la ruta cambia
+  useEffect(() => {
+    if (location.hash) {
+      setTimeout(() => {
+        const id = location.hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
     }
   }, [location]);
 
@@ -61,7 +104,7 @@ export default function Navbar() {
                 key={menu.name}
                 className="relative group cursor-pointer py-2"
               >
-                <Link to={`${menu.path}${menu.hash}`}>
+                <Link to={`${menu.path}${menu.hash}`} onClick={(e) => handleNavClick(e, menu)}>
                   {/* Nombre de la sección */}
                   <span
                     className={`text-sm transition-colors ${
@@ -88,13 +131,15 @@ export default function Navbar() {
           <div className="flex items-center gap-3 md:gap-6">
             
             {/* Botón de Canasta de compras en la barra principal */}
-            <div className="relative cursor-pointer hover:opacity-80 transition-opacity">
+            <div className="relative cursor-pointer hover:opacity-80 transition-opacity" onClick={openCart}>
               <ShoppingBag className="w-5 h-5 md:w-6 md:h-6 text-dark" strokeWidth={1.5} />
               
               {/* Notificación (número de items) de la canasta */}
-              <span className="absolute -top-1.5 -right-2 bg-red-500 text-white text-[9px] md:text-[10px] font-bold w-3.5 h-3.5 md:w-4 md:h-4 rounded-full flex items-center justify-center border-2 border-cream box-content">
-                2
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1.5 -right-2 bg-red-500 text-white text-[9px] md:text-[10px] font-bold w-3.5 h-3.5 md:w-4 md:h-4 rounded-full flex items-center justify-center border-2 border-cream box-content">
+                  {cartCount}
+                </span>
+              )}
             </div>
             
             {/* Botón de Tienda en la barra principal */}
@@ -134,7 +179,13 @@ export default function Navbar() {
                   className="cursor-pointer border-b border-dark/5 pb-2"
                   onClick={() => setIsMobileMenuOpen(false)} // Cerrar menú al hacer clic
                 >
-                  <Link to={`${menu.path}${menu.hash}`}>
+                  <Link 
+                    to={`${menu.path}${menu.hash}`}
+                    onClick={(e) => {
+                      setIsMobileMenuOpen(false);
+                      handleNavClick(e, menu);
+                    }}
+                  >
                     <span
                       className={`block text-base transition-colors ${
                         isActive(menu)
@@ -152,9 +203,9 @@ export default function Navbar() {
             {/* Botones adicionales dentro del menú móvil */}
             <div className="flex flex-col gap-3 mt-2">
               {/* Botón de Canasta en el menú móvil */}
-              <button className="w-full border border-dark hover:bg-dark/5 transition-colors text-dark px-7 py-3 rounded-full text-sm font-medium flex items-center justify-center gap-2">
+              <button className="w-full border border-dark hover:bg-dark/5 transition-colors text-dark px-7 py-3 rounded-full text-sm font-medium flex items-center justify-center gap-2" onClick={openCart}>
                 <ShoppingBag className="w-4 h-4" />
-                Ver Canasta (2)
+                Ver Canasta {cartCount > 0 ? `(${cartCount})` : ''}
               </button>
               
               {/* Botón de Tienda en el menú móvil */}

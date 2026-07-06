@@ -83,8 +83,8 @@ export default function Features() {
   };
 
   return (
-    <section id="conoce-mas" className="py-24 px-6 md:px-12 lg:px-24 bg-cream relative z-20">
-      <div className="max-w-7xl mx-auto">
+    <section id="conoce-mas" className="py-24 px-6 md:px-12 lg:px-24 bg-cream relative z-20 overflow-hidden flex flex-col">
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Video Section */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 40 }}
@@ -144,8 +144,15 @@ export default function Features() {
             </h3>
             <div className="w-16 h-1 bg-gold mb-8 rounded-full" />
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-dark leading-tight tracking-tight">
-              Un aliado natural para tu bienestar
+              Un aliado natural para<br />tu bienestar
             </h2>
+            <div className="w-full mt-12 md:mt-16 lg:mt-auto flex-grow flex items-end">
+              <img 
+                src="https://webgabriel.vercel.app/honeyP.png" 
+                alt="Honey jar" 
+                className="w-[120%] max-w-[320px] md:max-w-[400px] lg:max-w-[500px] object-contain object-left-bottom -ml-6 md:-ml-12 lg:-ml-12"
+              />
+            </div>
           </motion.div>
 
           {/* Right Column: Features Grid */}

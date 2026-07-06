@@ -25,7 +25,7 @@ export default function Hero() {
   const arrowOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
 
   return (
-    <div id="paquetes" ref={containerRef} className="h-[200vh] relative bg-cream">
+    <div ref={containerRef} className="h-[200vh] relative bg-cream">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         
         {/* Image container: Hidden initially, fades in and rises */}
