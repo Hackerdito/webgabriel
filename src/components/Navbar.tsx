@@ -90,7 +90,7 @@ export default function Navbar() {
         {/* Logotipo de la izquierda */}
         <div className="flex flex-col items-start cursor-pointer">
           <Link to="/">
-            <img src="https://webgabriel.vercel.app/pan.webp" alt="Gabriel Organic Foods" className="h-7 md:h-12 object-contain" />
+            <img src="https://webgabriel.vercel.app/pan.png" alt="Gabriel Organic Foods" className="h-7 md:h-12 object-contain" />
           </Link>
         </div>
 
