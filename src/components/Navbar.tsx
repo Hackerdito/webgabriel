@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useLocation } from 'react-router-dom';
@@ -90,7 +90,7 @@ export default function Navbar() {
         {/* Logotipo de la izquierda */}
         <div className="flex flex-col items-start cursor-pointer">
           <Link to="/">
-            <img src="https://webgabriel.vercel.app/pan.png" alt="Gabriel Organic Foods" className="h-7 md:h-12 object-contain" />
+            <img src="https://webgabriel.vercel.app/pan.png" alt="Gabriel Organic Foods" className="h-[14px] md:h-6 object-contain" />
           </Link>
         </div>
 
